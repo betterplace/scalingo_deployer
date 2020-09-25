@@ -1,12 +1,16 @@
 package scalingo_deployer
 
 import (
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
 
 	scalingo "github.com/Scalingo/go-scalingo"
 )
+
+var startAt time.Time
 
 func newScalingoClient(config Config) *scalingo.Client {
 	clientConfig := scalingo.ClientConfig{
@@ -20,18 +24,34 @@ func newScalingoClient(config Config) *scalingo.Client {
 	return client
 }
 
-func waitToFinish(client *scalingo.Client, scalingoApp, deploymentID string) bool {
+func buildDeploymentOutput(client *scalingo.Client, deployment *scalingo.Deployment) string {
+	res, err := client.DeploymentLogs(deployment.Links.Output)
+	if err != nil {
+		panic(err)
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("Deployment finished with %s\nLog Output:\n%s\n", deployment.Status, string(body))
+}
+
+func waitToFinish(config Config, client *scalingo.Client, deploymentID string) bool {
 	var lastStatus scalingo.DeploymentStatus
 	for {
-		deployment, err := client.Deployment(scalingoApp, deploymentID)
+		deployment, err := client.Deployment(config.ScalingoApp, deploymentID)
 		if err != nil {
 			panic(err)
 		}
 		if deployment.HasFailed() {
-			log.Printf("Deployment failed with %s\n", deployment.Status)
+			output := buildDeploymentOutput(client, deployment)
+			log.Print(output)
+			reportHappening(config, deployment, output, false)
 			return false
 		} else if deployment.IsFinished() {
-			log.Printf("Deployment has finished in state %s\n", deployment.Status)
+			output := buildDeploymentOutput(client, deployment)
+			log.Print(output)
+			reportHappening(config, deployment, output, true)
 			break
 		} else {
 			if deployment.Status != lastStatus {
@@ -45,6 +65,7 @@ func waitToFinish(client *scalingo.Client, scalingoApp, deploymentID string) boo
 }
 
 func Start(config Config) {
+	startAt = time.Now()
 	log.Printf(
 		"Starting deployment of %s@%s to scalingo app %s\n",
 		config.GitRef,
@@ -61,7 +82,7 @@ func Start(config Config) {
 	if err != nil {
 		panic(err)
 	}
-	if !waitToFinish(client, config.ScalingoApp, deployment.ID) {
+	if !waitToFinish(config, client, deployment.ID) {
 		os.Exit(1)
 	}
 }

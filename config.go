@@ -9,6 +9,7 @@ type Config struct {
 	ScalingoAPIEndpoint string `split_words:"true" required:"true" default:"https://api.osc-fr1.scalingo.com" desc:"the scalingo API endpoint to use"`
 	ScalingoApp         string `split_words:"true" required:"true" desc:"the name of the scalingo app to deploy"`
 	ScalingoAPIToken    string `split_words:"true" required:"true" desc:"the scalingo API token to use"`
+	HappeningURL        string `split_words:"true" desc:"optional happening URL to report deployments to"`
 }
 
 func (config *Config) GithubOwner() string {

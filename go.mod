@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/Scalingo/go-scalingo v4.7.2+incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/flori/happening v0.0.0-20200914190536-7f84da73f7c3
 	github.com/golang/mock v1.4.4 // indirect
 	github.com/google/go-github/v32 v32.1.0
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
