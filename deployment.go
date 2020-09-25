@@ -24,7 +24,7 @@ func newScalingoClient(config Config) *scalingo.Client {
 	return client
 }
 
-func buildDeploymentOutput(client *scalingo.Client, deployment *scalingo.Deployment) string {
+func buildDeploymentOutput(config Config, client *scalingo.Client, deployment *scalingo.Deployment) string {
 	res, err := client.DeploymentLogs(deployment.Links.Output)
 	if err != nil {
 		panic(err)
@@ -33,7 +33,14 @@ func buildDeploymentOutput(client *scalingo.Client, deployment *scalingo.Deploym
 	if err != nil {
 		panic(err)
 	}
-	return fmt.Sprintf("Deployment finished with %s\nLog Output:\n%s\n", deployment.Status, string(body))
+	return fmt.Sprintf(
+		"Deployment of %s@%s to %s finished with %s\nLog Output:\n%s\n",
+		config.GitRef,
+		config.GithubOwnerRepo,
+		config.ScalingoApp,
+		deployment.Status,
+		string(body),
+	)
 }
 
 func waitToFinish(config Config, client *scalingo.Client, deploymentID string) bool {
@@ -44,12 +51,12 @@ func waitToFinish(config Config, client *scalingo.Client, deploymentID string) b
 			panic(err)
 		}
 		if deployment.HasFailed() {
-			output := buildDeploymentOutput(client, deployment)
+			output := buildDeploymentOutput(config, client, deployment)
 			log.Print(output)
 			reportHappening(config, deployment, output, false)
 			return false
 		} else if deployment.IsFinished() {
-			output := buildDeploymentOutput(client, deployment)
+			output := buildDeploymentOutput(config, client, deployment)
 			log.Print(output)
 			reportHappening(config, deployment, output, true)
 			break
