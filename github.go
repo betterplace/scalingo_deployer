@@ -2,9 +2,9 @@ package scalingo_deployer
 
 import (
 	"context"
-	"log"
 	"github.com/google/go-github/v32/github"
 	"golang.org/x/oauth2"
+	"log"
 )
 
 func archiveDownloadURL(config Config) string {
@@ -22,7 +22,7 @@ func archiveDownloadURL(config Config) string {
 	options := github.RepositoryContentGetOptions{
 		Ref: config.GitRef,
 	}
-	downloadURL, _, err := client.Repositories.GetArchiveLink(ctx, "betterplace", "me", github.Tarball, &options, true)
+	downloadURL, _, err := client.Repositories.GetArchiveLink(ctx, config.GithubOwner(), config.GithubRepo(), github.Tarball, &options, true)
 	if err != nil {
 		panic(err)
 	}
