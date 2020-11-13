@@ -1,8 +1,12 @@
-DOCKER_IMAGE = scalingo_deployer
+DOCKER_IMAGE_LATEST = scalingo_deployer
+DOCKER_IMAGE = $(DOCKER_IMAGE_LATEST):$(REVISION_SHORT)
 PROJECT_ID = betterplace-183212
+REMOTE_LATEST_TAG := eu.gcr.io/${PROJECT_ID}/$(DOCKER_IMAGE_LATEST)
 REMOTE_TAG = eu.gcr.io/$(PROJECT_ID)/$(DOCKER_IMAGE)
 GOPATH := $(shell pwd)/gospace
 GOBIN = $(GOPATH)/bin
+REVISION := $(shell git rev-parse HEAD)
+REVISION_SHORT := $(shell echo $(REVISION) | head -c 7)
 
 .EXPORT_ALL_VARIABLES:
 
@@ -46,3 +50,7 @@ push: build
 	gcloud auth configure-docker
 	docker tag $(DOCKER_IMAGE) $(REMOTE_TAG)
 	docker push $(REMOTE_TAG)
+
+push-latest: push
+	docker tag ${DOCKER_IMAGE} ${REMOTE_LATEST_TAG}
+	docker push ${REMOTE_LATEST_TAG}
