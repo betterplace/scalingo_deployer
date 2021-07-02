@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/Scalingo/go-scalingo v4.7.2+incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/flori/happening v0.0.0-20210616103217-2ec7f39ea31d
+	github.com/flori/happening v0.0.0-20210702015839-1ffdef0e7523
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/go-github/v32 v32.1.0
 	github.com/google/go-querystring v1.1.0 // indirect

@@ -169,6 +169,8 @@ github.com/flori/happening v0.0.0-20200914190536-7f84da73f7c3 h1:WTUYp+lpxRPmFdi
 github.com/flori/happening v0.0.0-20200914190536-7f84da73f7c3/go.mod h1:serNLHqfss//l++loCtgp+b6eJIjhCohHeAiM+heQ2s=
 github.com/flori/happening v0.0.0-20210616103217-2ec7f39ea31d h1:Tro+ICbyAd958LtHUdN6OsJP6X/UnoPyZnBLrp4IND0=
 github.com/flori/happening v0.0.0-20210616103217-2ec7f39ea31d/go.mod h1:5eN1DOOfLCA1axQ+Q73vJig90sRftovzqlcUWn5EwPw=
+github.com/flori/happening v0.0.0-20210702015839-1ffdef0e7523 h1:siWbMqTauSBOYyeuXs8S/VvqqwWUKB3//Nd1Qre0Mlc=
+github.com/flori/happening v0.0.0-20210702015839-1ffdef0e7523/go.mod h1:5/YwJ2tyn/XLt40KSthTm8334v1lS6pMgYHRXSV2JkI=
 github.com/franela/goblin v0.0.0-20200105215937-c9ffbefa60db/go.mod h1:7dvUGVsVBjqR7JHJk0brhHOZYGmfBYOrK0ZhYMEtBr4=
 github.com/franela/goreq v0.0.0-20171204163338-bcd34c9993f8/go.mod h1:ZhphrRTfi2rbfLwlschooIH4+wKKDR4Pdxhh+TRoA20=
 github.com/frankban/quicktest v1.2.2/go.mod h1:Qh/WofXFeiAFII1aEBu529AtJo6Zg2VHscnEsbBnJ20=
