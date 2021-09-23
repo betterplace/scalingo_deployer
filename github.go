@@ -2,10 +2,17 @@ package scalingo_deployer
 
 import (
 	"context"
+	"log"
+	"net/url"
+
 	"github.com/google/go-github/v32/github"
 	"golang.org/x/oauth2"
-	"log"
 )
+
+func redacted(u url.URL) string {
+	u.RawQuery = ""
+	return u.String()
+}
 
 func archiveDownloadURL(config Config) string {
 	ctx := context.Background()
@@ -27,6 +34,6 @@ func archiveDownloadURL(config Config) string {
 		panic(err)
 	}
 
-	log.Printf("Determined archive download URL to be %s\n", downloadURL.String())
+	log.Printf("Determined archive download URL to be %s\n", redacted(*downloadURL))
 	return downloadURL.String()
 }

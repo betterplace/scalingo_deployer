@@ -36,15 +36,15 @@ build-info:
 	@echo $(REMOTE_TAG)
 
 build:
-	docker build -t $(DOCKER_IMAGE) .
+	docker build --pull -t $(DOCKER_IMAGE) .
 	$(MAKE) build-info
 
 build-force:
-	docker build -t $(DOCKER_IMAGE) --no-cache .
+	docker build --pull -t $(DOCKER_IMAGE) --no-cache .
 	$(MAKE) build-info
 
 debug:
-	docker run --rm -it $(DOCKER_IMAGE) bash
+	docker run --rm -it  --entrypoint bash $(DOCKER_IMAGE)
 
 push: build
 	gcloud auth configure-docker
