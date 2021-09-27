@@ -1,0 +1,25 @@
+version: v1.0
+name: scalingo_deployer
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Building Docker Image
+    task:
+
+      secrets:
+        - name: GCP
+
+      prologue:
+        commands:
+          - gcloud auth activate-service-account --key-file=.secrets/gcp.json
+          - gcloud auth configure-docker -q
+          - checkout
+
+      jobs:
+        - name: Building and pushing
+          commands:
+            - make build
+            - test "$SEMAPHORE_GIT_BRANCH" = "master" && make push-latest
