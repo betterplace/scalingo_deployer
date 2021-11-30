@@ -1,4 +1,4 @@
-FROM alpine:3.14 AS builder
+FROM alpine:3.14.3 AS builder
 
 # Update/Upgrade/Add packages for building
 
@@ -14,7 +14,7 @@ ENV GOPATH=/build/scalingo_deployer/gospace
 
 RUN make clobber setup all
 
-FROM alpine:3.14 AS runner
+FROM alpine:3.14.3 AS runner
 
 # Update/Upgrade/Add packages
 
