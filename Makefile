@@ -44,7 +44,7 @@ build-force:
 	$(MAKE) build-info
 
 debug:
-	docker run --rm -it  --entrypoint bash $(DOCKER_IMAGE)
+	docker run --rm
 
 push: build
 	gcloud auth configure-docker
