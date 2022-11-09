@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	scalingo "github.com/Scalingo/go-scalingo"
+	scalingo "github.com/Scalingo/go-scalingo/v4"
 	h "github.com/flori/happening"
 )
 

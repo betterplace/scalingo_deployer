@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	scalingo "github.com/Scalingo/go-scalingo"
+	scalingo "github.com/Scalingo/go-scalingo/v4"
 )
 
 var startAt time.Time
