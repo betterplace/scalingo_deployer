@@ -1,23 +1,25 @@
 package scalingo_deployer
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"time"
 
-	scalingo "github.com/Scalingo/go-scalingo/v4"
+	scalingo "github.com/Scalingo/go-scalingo/v6"
 )
 
 var startAt time.Time
+var ctx context.Context
 
 func newScalingoClient(config Config) *scalingo.Client {
 	clientConfig := scalingo.ClientConfig{
 		APIEndpoint: config.ScalingoAPIEndpoint,
 		APIToken:    config.ScalingoAPIToken,
 	}
-	client, err := scalingo.New(clientConfig)
+	client, err := scalingo.New(ctx, clientConfig)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +27,7 @@ func newScalingoClient(config Config) *scalingo.Client {
 }
 
 func buildDeploymentOutput(config Config, client *scalingo.Client, deployment *scalingo.Deployment) string {
-	res, err := client.DeploymentLogs(deployment.Links.Output)
+	res, err := client.DeploymentLogs(ctx, deployment.Links.Output)
 	if err != nil {
 		panic(err)
 	}
@@ -46,7 +48,7 @@ func buildDeploymentOutput(config Config, client *scalingo.Client, deployment *s
 func waitToFinish(config Config, client *scalingo.Client, deploymentID string) bool {
 	var lastStatus scalingo.DeploymentStatus
 	for {
-		deployment, err := client.Deployment(config.ScalingoApp, deploymentID)
+		deployment, err := client.Deployment(ctx, config.ScalingoApp, deploymentID)
 		if err != nil {
 			panic(err)
 		}
@@ -72,6 +74,7 @@ func waitToFinish(config Config, client *scalingo.Client, deploymentID string) b
 }
 
 func Start(config Config) {
+	ctx = context.Background()
 	startAt = time.Now()
 	log.Printf(
 		"Starting deployment of %s@%s to scalingo app %s\n",
@@ -85,7 +88,7 @@ func Start(config Config) {
 		GitRef:    &config.GitRef,
 		SourceURL: sourceURL,
 	}
-	deployment, err := client.DeploymentsCreate(config.ScalingoApp, &params)
+	deployment, err := client.DeploymentsCreate(ctx, config.ScalingoApp, &params)
 	if err != nil {
 		panic(err)
 	}
