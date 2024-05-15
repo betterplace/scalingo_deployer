@@ -55,12 +55,10 @@ func waitToFinish(config Config, client *scalingo.Client, deploymentID string) b
 		if deployment.HasFailed() {
 			output := buildDeploymentOutput(config, client, deployment)
 			log.Print(output)
-			reportHappening(config, deployment, output, false)
 			return false
 		} else if deployment.IsFinished() {
 			output := buildDeploymentOutput(config, client, deployment)
 			log.Print(output)
-			reportHappening(config, deployment, output, true)
 			break
 		} else {
 			if deployment.Status != lastStatus {

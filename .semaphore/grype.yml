@@ -1,0 +1,28 @@
+version: v1.0
+name: grype
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+
+blocks:
+  - name: Grype scan for current build
+    task:
+
+      secrets:
+        - name: GCP
+
+      prologue:
+        commands:
+          - checkout
+          - sudo -H DEBIAN_FRONTEND=noninteractive sh -c 'apt install -y mailutils'
+
+      jobs:
+        - name: Building and scanning
+          commands:
+            - |
+              if ! make grype >/tmp/grype.txt 2>&1
+              then
+                mail </tmp/grype.txt -s "Grype scan failed for $SEMAPHORE_PROJECT_NAME" pe@betterplace.org
+              fi
+              cat /tmp/grype.txt

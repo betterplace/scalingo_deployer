@@ -1,18 +1,17 @@
 module github.com/betterplace/scalingo_deployer
 
-go 1.20
+go 1.21
 
 require (
 	github.com/Scalingo/go-scalingo v4.7.2+incompatible
 	github.com/Scalingo/go-scalingo/v4 v4.16.0
-	github.com/Scalingo/go-scalingo/v6 v6.7.4
-	github.com/flori/happening v0.0.0-20230906201840-89317b410bcd
+	github.com/Scalingo/go-scalingo/v6 v6.7.7
 	github.com/google/go-github/v32 v32.1.0
-	golang.org/x/oauth2 v0.15.0
+	golang.org/x/oauth2 v0.20.0
 )
 
 require (
-	github.com/Scalingo/go-utils/errors/v2 v2.3.0 // indirect
+	github.com/Scalingo/go-utils/errors/v2 v2.4.0 // indirect
 	github.com/go-co-op/gocron v1.36.0 // indirect
 	github.com/gobuffalo/envy v1.10.2 // indirect
 	github.com/gobuffalo/packd v1.0.2 // indirect
@@ -20,7 +19,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/websocket v1.5.1 // indirect
@@ -53,15 +52,15 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
-	golang.org/x/crypto v0.16.0 // indirect
+	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/mod v0.14.0 // indirect
-	golang.org/x/net v0.19.0 // indirect
+	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/errgo.v1 v1.0.1 // indirect
 	gorm.io/driver/postgres v1.5.4 // indirect
 	gorm.io/gorm v1.25.5 // indirect
