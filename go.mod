@@ -1,6 +1,6 @@
 module github.com/betterplace/scalingo_deployer
 
-go 1.21
+go 1.22
 
 require (
 	github.com/Scalingo/go-scalingo v4.7.2+incompatible
