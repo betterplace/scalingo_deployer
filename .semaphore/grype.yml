@@ -21,6 +21,7 @@ blocks:
         - name: Building and scanning
           commands:
             - |
+              set -e
               if ! make grype >/tmp/grype.txt 2>&1
               then
                 mail </tmp/grype.txt -s "Grype scan failed for $SEMAPHORE_PROJECT_NAME" pe@betterplace.org
