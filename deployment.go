@@ -3,7 +3,7 @@ package scalingo_deployer
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"time"
@@ -11,7 +11,6 @@ import (
 	scalingo "github.com/Scalingo/go-scalingo/v6"
 )
 
-var startAt time.Time
 var ctx context.Context
 
 func newScalingoClient(config Config) *scalingo.Client {
@@ -31,7 +30,7 @@ func buildDeploymentOutput(config Config, client *scalingo.Client, deployment *s
 	if err != nil {
 		panic(err)
 	}
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -73,7 +72,6 @@ func waitToFinish(config Config, client *scalingo.Client, deploymentID string) b
 
 func Start(config Config) {
 	ctx = context.Background()
-	startAt = time.Now()
 	log.Printf(
 		"Starting deployment of %s@%s to scalingo app %s\n",
 		config.GitRef,
