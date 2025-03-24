@@ -3,9 +3,7 @@ module github.com/betterplace/scalingo_deployer
 go 1.23.4
 
 require (
-	github.com/Scalingo/go-scalingo v4.7.2+incompatible
-	github.com/Scalingo/go-scalingo/v4 v4.16.0
-	github.com/Scalingo/go-scalingo/v6 v6.7.7
+	github.com/Scalingo/go-scalingo/v7 v7.0.2
 	github.com/google/go-github/v32 v32.1.0
 	golang.org/x/oauth2 v0.28.0
 )

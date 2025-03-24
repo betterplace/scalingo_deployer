@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	scalingo "github.com/Scalingo/go-scalingo/v6"
+	scalingo "github.com/Scalingo/go-scalingo/v7"
 )
 
 var ctx context.Context
