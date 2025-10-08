@@ -9,9 +9,6 @@ blocks:
   - name: Grype scan for current build
     task:
 
-      secrets:
-        - name: GCP
-
       prologue:
         commands:
           - checkout
