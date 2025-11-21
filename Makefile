@@ -43,9 +43,6 @@ build-force:
 	docker build --pull -t $(DOCKER_IMAGE) --no-cache .
 	$(MAKE) build-info
 
-debug:
-	docker run --rm
-
 push: build
 	gcloud auth configure-docker
 	docker tag $(DOCKER_IMAGE) $(REMOTE_TAG)
