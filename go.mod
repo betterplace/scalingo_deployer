@@ -1,6 +1,6 @@
 module github.com/betterplace/scalingo_deployer
 
-go 1.25
+go 1.25.5
 
 require (
 	github.com/Scalingo/go-scalingo/v7 v7.0.2
