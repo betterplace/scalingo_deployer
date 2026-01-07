@@ -9,11 +9,18 @@ import (
 	"golang.org/x/oauth2"
 )
 
+// redacted returns a URL with the query parameters removed for logging
+// purposes. This prevents sensitive information like API tokens from being
+// exposed in logs.
 func redacted(u url.URL) string {
 	u.RawQuery = ""
 	return u.String()
 }
 
+// archiveDownloadURL generates the download URL for a GitHub repository
+// archive. It uses the GitHub API with the provided token to get the tarball
+// URL for the specified reference. The URL is logged for debugging purposes
+// but with query parameters redacted.
 func archiveDownloadURL(config Config) string {
 	ctx := context.Background()
 
