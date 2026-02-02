@@ -2,11 +2,17 @@
 
 ## Description
 
-**scalingo_deployer** is a powerful tool designed to streamline and manage deployments to the Scalingo PaaS provider. It enables users to trigger deployments using specific Git references and control the deployment process through environment variables. The tool integrates with GitHub repositories, making it an essential utility for automating and monitoring your Scalingo-based applications' deployments.
+**scalingo_deployer** is a powerful tool designed to streamline and manage
+deployments to the Scalingo PaaS provider. It enables users to trigger
+deployments using specific Git references and control the deployment process
+through environment variables. The tool integrates with GitHub repositories,
+making it an essential utility for automating and monitoring your
+Scalingo-based applications' deployments.
 
 ## Documentation
 
-Complete API documentation is available at: [GitHub.io](https://betterplace.github.io/scalingo_deployer/github.com/betterplace/scalingo_deployer/)
+Complete API documentation is available at:
+[GitHub.io](https://betterplace.github.io/scalingo_deployer/github.com/betterplace/scalingo_deployer/)
 
 ## Building `scalingo_deployer`
 
@@ -52,7 +58,8 @@ Complete API documentation is available at: [GitHub.io](https://betterplace.gith
 
 ## Usage
 
-The deployment tool is designed to be run as a Docker container and supports deployment to Scalingo PaaS through environment variables.
+The deployment tool is designed to be run as a Docker container and supports
+deployment to Scalingo PaaS through environment variables.
 
 ### Docker Usage
 
@@ -70,7 +77,9 @@ docker run
 
 ### Environment Variables
 
-The **scalingo_deployer** tool uses several environment variables to configure its behavior. These variables are parsed and validated at runtime, allowing for flexible and dynamic deployment configurations.
+The `scalingo_deployer` tool uses several environment variables to configure
+its behavior. These variables are parsed and validated at runtime, allowing for
+flexible and dynamic deployment configurations.
 
 #### Core Configuration
 
@@ -105,13 +114,18 @@ The tool uses the following exit codes to indicate the outcome of operations:
 
 The deployment workflow follows this process:
 
-1. **Configuration Validation**: The tool validates all required environment variables
-2. **Archive Retrieval**: It fetches the source code archive from GitHub using the provided token
-3. **Deployment Initiation**: It creates a deployment on Scalingo using the retrieved archive
+1. **Configuration Validation**: The tool validates all required environment
+   variables
+2. **Archive Retrieval**: It fetches the source code archive from GitHub using
+   the provided token
+3. **Deployment Initiation**: It creates a deployment on Scalingo using the
+   retrieved archive
 4. **Monitoring**: The tool continuously polls Scalingo for deployment status
-5. **Result Handling**: Based on the deployment outcome, it exits with appropriate status codes (0 for success, 1 for failure)
+5. **Result Handling**: Based on the deployment outcome, it exits with
+   appropriate status codes (0 for success, 1 for failure)
 
-This workflow ensures coordinated deployments while maintaining the ability to track deployment progress through Scalingo's API.
+This workflow ensures coordinated deployments while maintaining the ability to
+track deployment progress through Scalingo's API.
 
 ```mermaid
 graph TD
@@ -153,12 +167,17 @@ docker run \
 ```
 
 - **Parameters Explained**:
-  - `GITHUB_OWNER_REPO=betterplace/betterplace`: Specifies the GitHub repository involved in the deployment.
+  - `GITHUB_OWNER_REPO=betterplace/betterplace`: Specifies the GitHub
+    repository involved in the deployment.
   - `GIT_REF=main`: The Git reference to deploy (branch, tag, or commit).
-  - `GITHUB_API_TOKEN=your-github-token`: GitHub personal access token with read access to repository content.
-  - `SCALINGO_APP=your-scalingo-app`: The Scalingo application name to deploy to.
-  - `SCALINGO_API_TOKEN=your-scalingo-token`: Scalingo API token with deployment permissions.
+  - `GITHUB_API_TOKEN=your-github-token`: GitHub personal access token with
+    read access to repository content.
+  - `SCALINGO_APP=your-scalingo-app`: The Scalingo application name to deploy
+    to.
+  - `SCALINGO_API_TOKEN=your-scalingo-token`: Scalingo API token with
+    deployment permissions.
 
 ## License
 
-Apache License, Version 2.0 – See the [LICENSE](LICENSE) file in the source archive.
+Apache License, Version 2.0 – See the [LICENSE](LICENSE) file in the source
+archive.

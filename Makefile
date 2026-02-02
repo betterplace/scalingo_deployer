@@ -15,13 +15,8 @@ all: scalingo_deployer
 scalingo_deployer: cmd/scalingo_deployer/main.go *.go
 	go build -o $@ $<
 
-setup: fake-package
+setup:
 	go mod download
-
-fake-package:
-	rm -rf $(GOPATH)/src/github.com/betterplace/scalingo_deployer
-	mkdir -p $(GOPATH)/src/github.com/betterplace
-	ln -s $(shell pwd) $(GOPATH)/src/github.com/betterplace/scalingo_deployer
 
 clean:
 	@rm -f scalingo_deployer tags
@@ -37,10 +32,6 @@ build-info:
 
 build:
 	docker build --pull -t $(DOCKER_IMAGE) .
-	$(MAKE) build-info
-
-build-force:
-	docker build --pull -t $(DOCKER_IMAGE) --no-cache .
 	$(MAKE) build-info
 
 push: build
