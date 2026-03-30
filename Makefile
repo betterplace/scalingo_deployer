@@ -44,5 +44,5 @@ push-latest: push
 	docker push ${REMOTE_LATEST_TAG}
 
 grype:
-	@docker pull "$(REMOTE_LATEST_TAG)"
-	@docker run --pull always --rm --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve  --fail-on low "$(REMOTE_LATEST_TAG)"
+	@docker pull --quiet "$(REMOTE_LATEST_TAG)"
+	@docker run --quiet --pull always --rm --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve  --fail-on low "$(REMOTE_LATEST_TAG)"

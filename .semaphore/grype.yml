@@ -21,7 +21,10 @@ blocks:
               if ! make grype >/tmp/grype.txt 2>&1
               then
                 cat /tmp/grype.txt
-                echo "See https://betterplace.semaphoreci.com/jobs/$SEMAPHORE_JOB_ID." | mail -s "Grype scan failed for $SEMAPHORE_PROJECT_NAME" pe@betterplace.org
+                (
+                  echo -e "See https://betterplace.semaphoreci.com/jobs/$SEMAPHORE_JOB_ID.\n"
+                  cat /tmp/grype.txt
+                ) | mail -s  "Grype scan failed for $SEMAPHORE_PROJECT_NAME" pe@betterplace.org
                 exit 1
               else
                 cat /tmp/grype.txt
