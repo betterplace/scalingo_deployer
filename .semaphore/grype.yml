@@ -9,10 +9,15 @@ blocks:
   - name: Grype scan for current build
     task:
 
+      secrets:
+        - name: semaphoreci-grype-pull-access
+        - name: grype-scan-zapier
+
       prologue:
         commands:
+          - gcloud auth activate-service-account --key-file=semaphoreci-grype-pull-access.json
+          - gcloud auth configure-docker -q
           - checkout
-          - sudo -H DEBIAN_FRONTEND=noninteractive sh -c 'apt install -y mailutils'
 
       jobs:
         - name: Building and scanning
@@ -20,12 +25,34 @@ blocks:
             - |
               if ! make grype >/tmp/grype.txt 2>&1
               then
+                # Print logs to the Semaphore console for immediate visibility
                 cat /tmp/grype.txt
-                (
-                  echo -e "See https://betterplace.semaphoreci.com/jobs/$SEMAPHORE_JOB_ID.\n"
-                  cat /tmp/grype.txt
-                ) | mail -s  "Grype scan failed for $SEMAPHORE_PROJECT_NAME" pe@betterplace.org
+
+                echo "Grype scan failed. Sending notification to Zapier..."
+
+                # Define payload variables
+                PROJECT_NAME="$SEMAPHORE_PROJECT_NAME"
+                JOB_URL="https://betterplace.semaphoreci.com/jobs/$SEMAPHORE_JOB_ID"
+                GRYPE_LOGS=$(cat /tmp/grype.txt)
+
+                # Use jq to build a valid, escaped JSON payload
+                PAYLOAD=$(jq -n \
+                  --arg proj "$PROJECT_NAME" \
+                  --arg url "$JOB_URL" \
+                  --arg logs "$GRYPE_LOGS" \
+                  '{
+                    project: $proj,
+                    job_url: $url,
+                    logs: $logs
+                  }')
+
+                # Send the payload to the Zapier Webhook
+                curl -X POST "$ZAPIER_GRYPE_WEBHOOK_URL" \
+                  -H "Content-Type: application/json" \
+                  -d "$PAYLOAD"
+
                 exit 1
               else
+                echo "Grype scan passed!"
                 cat /tmp/grype.txt
               fi
