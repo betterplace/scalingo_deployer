@@ -30,16 +30,18 @@ blocks:
 
                 echo "Grype scan failed. Sending notification to Zapier..."
 
-                # Define payload variables
+                # Strip ANSI codes, squash blanks, cap length,
+                # and build payload via --rawfile (avoids ARG_MAX)
                 PROJECT_NAME="$SEMAPHORE_PROJECT_NAME"
                 JOB_URL="https://betterplace.semaphoreci.com/jobs/$SEMAPHORE_JOB_ID"
-                GRYPE_LOGS=$(cat /tmp/grype.txt)
-
-                # Use jq to build a valid, escaped JSON payload
+                sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' /tmp/grype.txt \
+                  | cat -s \
+                  | tail -n 200 \
+                  > /tmp/grype_clean.txt
                 PAYLOAD=$(jq -n \
                   --arg proj "$PROJECT_NAME" \
                   --arg url "$JOB_URL" \
-                  --arg logs "$GRYPE_LOGS" \
+                  --rawfile logs /tmp/grype_clean.txt \
                   '{
                     project: $proj,
                     job_url: $url,
